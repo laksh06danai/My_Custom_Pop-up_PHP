@@ -1,0 +1,22 @@
+# Popup routing definition
+popup.settings_tab:
+  route_name: popup.settings
+  title: 'Settings'
+  base_route: popup.settings
+
+entity.popup.canonical:
+  route_name: entity.popup.canonical
+  base_route: entity.popup.canonical
+  title: 'View'
+
+entity.popup.edit_form:
+  route_name: entity.popup.edit_form
+  base_route: entity.popup.canonical
+  title: 'Edit'
+
+entity.popup.delete_form:
+  route_name:  entity.popup.delete_form
+  base_route:  entity.popup.canonical
+  title: Delete
+  weight: 10
+

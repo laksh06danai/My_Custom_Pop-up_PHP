@@ -1,0 +1,51 @@
+<?php
+
+use Drupal\custom_popup\Entity\Popup;
+
+
+/**
+ * Implements hook_theme().
+ */
+function custom_popup_theme($existing, $type, $theme, $path) {
+  return [
+    'popup-wrapper' => [
+      'variables' => [
+        'css' => NULL,
+        'content' => NULL,
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function custom_popup_page_attachments_alter(array &$attachments) {
+  if (\Drupal::currentUser()->isAnonymous()) {
+
+    $result = \Drupal::entityQuery('popup')->condition('status', 1)->execute();
+
+    if (!empty($result)) {
+      $popupList = Popup::loadMultiple(array_values($result));
+
+      /** @var \Drupal\custom_popup\Entity\Popup $popup */
+      foreach ($popupList as $popup) {
+        if ($popup->isVisible()) {
+
+          $attachments['#cache']['tags'][] = "popup:{$popup->id()}";
+          $attachments['#cache']['contexts'][] = 'url';
+
+          $popupTheme = [
+            '#theme' => 'popup-wrapper',
+            '#css' => $popup->get('css')->first()->getString(),
+            '#content' => \Drupal::entityTypeManager()->getViewBuilder('popup')->view($popup)
+          ];
+
+          $attachments['#attached']['library'][] = 'custom_popup/popup';
+          $attachments['#attached']['drupalSettings']['popup'] = \Drupal::service('renderer')->renderRoot($popupTheme);
+          $attachments['#attached']['drupalSettings']['popup_id'] = $popup->id();
+        }
+      }
+    }
+  }
+}

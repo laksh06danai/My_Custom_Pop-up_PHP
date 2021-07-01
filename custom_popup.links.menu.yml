@@ -1,0 +1,14 @@
+
+# Popup menu items definition
+entity.popup.collection:
+  title: 'Popup'
+  route_name: entity.popup.collection
+  description: 'List Popup entities'
+  parent: system.admin_structure
+  weight: 100
+
+popup.admin.structure.settings:
+  title: 'Popup settings'
+  description: 'Configure Popup entities'
+  route_name: popup.settings
+  parent: system.admin_structure

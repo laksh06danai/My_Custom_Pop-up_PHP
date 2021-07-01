@@ -1,0 +1,9 @@
+{
+  "name": "custom/custom_popup",
+  "type": "drupal-module",
+  "description": "Drupal custom popup module",
+  "minimum-stability": "dev",
+  "require": {
+
+  }
+}

@@ -1,0 +1,5 @@
+name: 'Custom popup'
+type: module
+description: 'Drupal custom popup module'
+core: 8.x
+package: 'custom'
